@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cep4sirsi5ehr"]
+
+[ext_resource type="Script" path="res://wig.gd" id="1_tby73"]
+[ext_resource type="Texture2D" uid="uid://dx0wj2md65lnj" path="res://wig01.svg" id="2_5j6ne"]
+[ext_resource type="PackedScene" uid="uid://mn34e5oqowro" path="res://motomami.tscn" id="3_a0vnv"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6fi62"]
+radius = 9.0
+height = 18.0
+
+[node name="Wig" type="CharacterBody2D"]
+script = ExtResource("1_tby73")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CapsuleShape2D_6fi62")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_5j6ne")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="motoMami" parent="." instance=ExtResource("3_a0vnv")]
+position = Vector2(0, -3.8147e-06)
+rotation = -0.0383683

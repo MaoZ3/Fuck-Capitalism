@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmvtluk2rwuin"]
+
+[ext_resource type="PackedScene" uid="uid://cep4sirsi5ehr" path="res://wig.tscn" id="1_vxiru"]
+[ext_resource type="Texture2D" uid="uid://da14gs87yo8l1" path="res://MznV.png" id="2_3kaky"]
+[ext_resource type="PackedScene" uid="uid://bxb41cnpmlpo7" path="res://estado.tscn" id="3_03f31"]
+
+[node name="Argentina" type="Node2D"]
+
+[node name="Wig" parent="." instance=ExtResource("1_vxiru")]
+position = Vector2(541, 342)
+
+[node name="MznV" type="Sprite2D" parent="."]
+position = Vector2(370, 379)
+texture = ExtResource("2_3kaky")
+
+[node name="Node2D" parent="." instance=ExtResource("3_03f31")]
+position = Vector2(370, 340)
