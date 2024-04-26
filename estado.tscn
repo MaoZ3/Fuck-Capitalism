@@ -1,19 +1,159 @@
-[gd_scene load_steps=3 format=3 uid="uid://bxb41cnpmlpo7"]
+[gd_scene load_steps=19 format=3 uid="uid://bxb41cnpmlpo7"]
 
 [ext_resource type="Texture2D" uid="uid://dm7kepswdv0r" path="res://ypf-logo.svg" id="1_64jjg"]
+[ext_resource type="Texture2D" uid="uid://dcgibsd36xebo" path="res://Explosion SpriteSheet.png" id="1_fxkwl"]
+
+[sub_resource type="GDScript" id="GDScript_hftdg"]
+script/source = "extends Area2D
+
+func _ready():
+
+	pass
+
+
+func animation_finished():
+	$AnimatedSprite2D.queue_free()
+	
+	
+func playExplo():
+	$YPF.queue_free()
+	$AnimatedSprite2D.play(\"new_animation\")
+
+
+func _process(delta):
+	pass
+
+func _on_area_entered(area):
+	playExplo()
+	#self.queue_free()
+	
+"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8pou6"]
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_xgwx4"]
+atlas = ExtResource("1_fxkwl")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0da8k"]
+atlas = ExtResource("1_fxkwl")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_juq3o"]
+atlas = ExtResource("1_fxkwl")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dnwl"]
+atlas = ExtResource("1_fxkwl")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6y333"]
+atlas = ExtResource("1_fxkwl")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vv5kh"]
+atlas = ExtResource("1_fxkwl")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kl1qh"]
+atlas = ExtResource("1_fxkwl")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f28et"]
+atlas = ExtResource("1_fxkwl")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xav70"]
+atlas = ExtResource("1_fxkwl")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8yahd"]
+atlas = ExtResource("1_fxkwl")
+region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5esbb"]
+atlas = ExtResource("1_fxkwl")
+region = Rect2(192, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grkeu"]
+atlas = ExtResource("1_fxkwl")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pmg2f"]
+atlas = ExtResource("1_fxkwl")
+region = Rect2(64, 192, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5fit4"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xgwx4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0da8k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_juq3o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dnwl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6y333")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vv5kh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kl1qh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f28et")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xav70")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8yahd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5esbb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grkeu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pmg2f")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[node name="Node2D" type="Area2D"]
+script = SubResource("GDScript_hftdg")
 metadata/_edit_group_ = true
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 shape = SubResource("CircleShape2D_8pou6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_5fit4")
+animation = &"new_animation"
 
 [node name="YPF" type="Sprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_64jjg")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
