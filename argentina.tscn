@@ -1,10 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://bmvtluk2rwuin"]
+[gd_scene load_steps=5 format=3 uid="uid://bmvtluk2rwuin"]
 
 [ext_resource type="PackedScene" uid="uid://cep4sirsi5ehr" path="res://wig.tscn" id="1_vxiru"]
 [ext_resource type="PackedScene" uid="uid://mn34e5oqowro" path="res://motomami.tscn" id="2_w4str"]
 [ext_resource type="PackedScene" uid="uid://bxb41cnpmlpo7" path="res://estado.tscn" id="3_03f31"]
 
-[node name="Argentina" type="Node2D"]
+[sub_resource type="GDScript" id="GDScript_fxg83"]
+script/source = "extends Node
+
+
+# Called when the node enters the scene tree for the first time.
+func _reaady():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[node name="Argentina" type="Node"]
+script = SubResource("GDScript_fxg83")
 
 [node name="Wig" parent="." instance=ExtResource("1_vxiru")]
 position = Vector2(541, 342)

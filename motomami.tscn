@@ -79,13 +79,11 @@ script = SubResource("GDScript_hctsb")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-96, -4)
 rotation = -1.06192
 shape = SubResource("CapsuleShape2D_m2av0")
 
 [node name="motopivot" type="Marker2D" parent="."]
-visible = false
 rotation = 0.0349837
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -7,26 +7,15 @@
 script/source = "extends Area2D
 
 func _ready():
-
 	pass
 
+func _on_area_entered(_area):
+	$AnimatedSprite2D.play(\"new_animation\")	
+	$YPF.hide()
 
-func animation_finished():
-	$AnimatedSprite2D.queue_free()
-	
-	
-func playExplo():
-	$YPF.queue_free()
-	$AnimatedSprite2D.play(\"new_animation\")
+func _on_animated_sprite_2d_animation_finished():
+	queue_free()
 
-
-func _process(delta):
-	pass
-
-func _on_area_entered(area):
-	playExplo()
-	#self.queue_free()
-	
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8pou6"]
@@ -92,6 +81,9 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_xgwx4")
 }, {
 "duration": 1.0,
@@ -135,7 +127,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"new_animation",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [node name="Node2D" type="Area2D"]
@@ -143,7 +135,6 @@ script = SubResource("GDScript_hftdg")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CircleShape2D_8pou6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -156,4 +147,7 @@ texture_filter = 1
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_64jjg")
 
+[node name="Timer" type="Timer" parent="."]
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
