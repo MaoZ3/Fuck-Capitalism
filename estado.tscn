@@ -4,17 +4,29 @@
 [ext_resource type="Texture2D" uid="uid://dcgibsd36xebo" path="res://Explosion SpriteSheet.png" id="1_fxkwl"]
 
 [sub_resource type="GDScript" id="GDScript_hftdg"]
-script/source = "extends Area2D
+script/source = "extends RigidBody2D
+
 
 func _ready():
 	pass
 
-func _on_area_entered(_area):
-	$AnimatedSprite2D.play(\"new_animation\")	
+func _on_area_2d_area_entered(area):
+	$AnimatedSprite2D.play(\"new_animation\")
 	$YPF.hide()
 
 func _on_animated_sprite_2d_animation_finished():
 	queue_free()
+
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	queue_free()
+	
+
+\"\"\"func _on_Enemy_destroyed():
+	# Este método se llama cuando el nodo \"Enemy\" es destruido
+	var new_enemy_instance = preload(\"res://estado.tscn\").instance()
+	# Agrega la nueva instancia al árbol de escenas
+	add_child(new_enemy_instance)\"\"\"
+
 
 "
 
@@ -127,27 +139,30 @@ animations = [{
 }],
 "loop": false,
 "name": &"new_animation",
-"speed": 10.0
+"speed": 20.0
 }]
 
-[node name="Node2D" type="Area2D"]
+[node name="estado" type="RigidBody2D"]
+mass = 0.2
+gravity_scale = 0.3
 script = SubResource("GDScript_hftdg")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_8pou6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_5fit4")
-animation = &"new_animation"
 
 [node name="YPF" type="Sprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_64jjg")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

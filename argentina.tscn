@@ -1,30 +1,112 @@
-[gd_scene load_steps=5 format=3 uid="uid://bmvtluk2rwuin"]
+[gd_scene load_steps=9 format=3 uid="uid://bmvtluk2rwuin"]
 
 [ext_resource type="PackedScene" uid="uid://cep4sirsi5ehr" path="res://wig.tscn" id="1_vxiru"]
 [ext_resource type="PackedScene" uid="uid://mn34e5oqowro" path="res://motomami.tscn" id="2_w4str"]
 [ext_resource type="PackedScene" uid="uid://bxb41cnpmlpo7" path="res://estado.tscn" id="3_03f31"]
+[ext_resource type="PackedScene" uid="uid://cpsmkfbuvnwna" path="res://endwordl.tscn" id="4_jr8b4"]
 
 [sub_resource type="GDScript" id="GDScript_fxg83"]
 script/source = "extends Node
-
+@export var estado_scena = PackedScene
 
 # Called when the node enters the scene tree for the first time.
 func _reaady():
-	pass # Replace with function body.
-
-
+	new_game()
+	pass
+func new_game():
+	$Wig.start($StartPosition.position)
+	$StartTimer.start()
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func _on_start_timer_timeout():
+	$estadoTimer.start()
+	
+
+func _on_estado_timer_timeout():
+		# Create a new instance of the Mob scene.
+	var est = estado_scena.instance()
+
+	# Choose a random location on Path2D.
+	var est_spawn_location = $Path2D/PathFollow2D
+	est_spawn_location.progress_ratio = randf()
+
+	# Set the mob's direction perpendicular to the path direction.
+	var direction = est_spawn_location.rotation + PI / 2
+
+	# Set the mob's position to a random location.
+	est.position = est_spawn_location.position
+
+	# Add some randomness to the direction.
+	direction += randf_range(-PI / 4, PI / 4)
+	est.rotation = direction
+
+	# Choose the velocity for the mob.
+	var velocity = Vector2(randf_range(150.0, 250.0), 0.0)
+	est.linear_velocity = velocity.rotated(direction)
+
+	# Spawn the mob by adding it to the Main scene.
+	add_child(estado_scena)
+	
 "
+
+[sub_resource type="GDScript" id="GDScript_llgsy"]
+script/source = "extends Area2D
+
+@onready var timer = $Timer
+
+
+func _on_area_entered(area):
+	print(\"aqui\")
+	$Timer
+
+
+\"\"\"func _on_body_entered(body):
+	print(\"aqui\")
+	pass # Replace with function body.\"\"\"
+"
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_pgskj"]
+
+[sub_resource type="Curve2D" id="Curve2D_d61g4"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1152, 0, 0, 0, 0, 0, 1152, 648, 0, 0, 0, 0, 0, 648, 0, 0, 0, 0, 0, 0)
+}
+point_count = 5
 
 [node name="Argentina" type="Node"]
 script = SubResource("GDScript_fxg83")
+estado_scena = ExtResource("3_03f31")
 
 [node name="Wig" parent="." instance=ExtResource("1_vxiru")]
-position = Vector2(541, 342)
+position = Vector2(581, 332)
 
 [node name="Motomami" parent="Wig" instance=ExtResource("2_w4str")]
 
 [node name="estado" parent="." instance=ExtResource("3_03f31")]
-position = Vector2(370, 340)
+position = Vector2(485, 28)
+
+[node name="limitwordl" parent="." instance=ExtResource("4_jr8b4")]
+position = Vector2(0, 649)
+script = SubResource("GDScript_llgsy")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="limitwordl"]
+shape = SubResource("WorldBoundaryShape2D_pgskj")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_d61g4")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+
+[node name="estadoTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="area_entered" from="limitwordl" to="limitwordl" method="_on_area_entered"]
+[connection signal="body_entered" from="limitwordl" to="limitwordl" method="_on_body_entered"]
+[connection signal="timeout" from="estadoTimer" to="." method="_on_estado_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
