@@ -1,31 +1,54 @@
-[gd_scene load_steps=19 format=3 uid="uid://bxb41cnpmlpo7"]
+[gd_scene load_steps=26 format=3 uid="uid://bxb41cnpmlpo7"]
 
 [ext_resource type="Texture2D" uid="uid://dm7kepswdv0r" path="res://ypf-logo.svg" id="1_64jjg"]
 [ext_resource type="Texture2D" uid="uid://dcgibsd36xebo" path="res://Explosion SpriteSheet.png" id="1_fxkwl"]
+[ext_resource type="Texture2D" uid="uid://c0kl5sw47mmyr" path="res://92f894ed2278d6036acb3cdf3db57770.jpg" id="1_mj6hy"]
+[ext_resource type="Texture2D" uid="uid://covyrg7wi25sp" path="res://afa.png" id="2_0mqr3"]
+[ext_resource type="Texture2D" uid="uid://cghsiheamli5c" path="res://download.png" id="3_ygktp"]
+[ext_resource type="Texture2D" uid="uid://cchjv6c5ipqqm" path="res://INTA.png" id="5_iq6c2"]
+[ext_resource type="Texture2D" uid="uid://ba6vvhbm6bkuv" path="res://SLRZ.png" id="6_yio7a"]
+[ext_resource type="Texture2D" uid="uid://pakvyj320hy7" path="res://uni.jpg" id="7_bwgkh"]
 
 [sub_resource type="GDScript" id="GDScript_hftdg"]
 script/source = "extends RigidBody2D
 
 
 func _ready():
-	pass
+	var estado_types = $AnimatedSprite2D.sprite_frames.get_animation_names()
+	$AnimatedSprite2D.play(estado_types[randi() % estado_types.size()])
+
 
 func _on_area_2d_area_entered(area):
-	$AnimatedSprite2D.play(\"new_animation\")
-	$YPF.hide()
+	$AnimatedSprite2D.play(\"Explo\")
 
-func _on_animated_sprite_2d_animation_finished():
-	queue_free()
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	queue_free()
 	
+	#ramdoms estado
+	\"\"\" 
+	#var estado_types = $AnimatedSprite2D.sprite_frames.get_animation_names()
+	#$AnimatedSprite2D.play(estado_types[randi() % estado_types.size()])
+	\"\"\"
 
 \"\"\"func _on_Enemy_destroyed():
 	# Este método se llama cuando el nodo \"Enemy\" es destruido
 	var new_enemy_instance = preload(\"res://estado.tscn\").instance()
 	# Agrega la nueva instancia al árbol de escenas
 	add_child(new_enemy_instance)\"\"\"
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 "
@@ -84,11 +107,34 @@ region = Rect2(0, 192, 64, 64)
 atlas = ExtResource("1_fxkwl")
 region = Rect2(64, 192, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_iupcn"]
+atlas = ExtResource("1_64jjg")
+region = Rect2(0, 0, 700, 700)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_5fit4"]
 animations = [{
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_mj6hy")
+}],
 "loop": true,
-"name": &"default",
+"name": &"AEROLINEARG",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_0mqr3")
+}],
+"loop": true,
+"name": &"AfA",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ygktp")
+}],
+"loop": true,
+"name": &"CONICET",
 "speed": 5.0
 }, {
 "frames": [{
@@ -138,31 +184,61 @@ animations = [{
 "texture": null
 }],
 "loop": false,
-"name": &"new_animation",
+"name": &"Explo",
 "speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_iq6c2")
+}],
+"loop": true,
+"name": &"INTA",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_yio7a")
+}],
+"loop": true,
+"name": &"SANLORENZO",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_bwgkh")
+}],
+"loop": true,
+"name": &"UNIs",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iupcn")
+}],
+"loop": true,
+"name": &"YPF",
+"speed": 5.0
 }]
 
 [node name="estado" type="RigidBody2D"]
-mass = 0.2
-gravity_scale = 0.3
+mass = 0.01
+gravity_scale = 0.0
 script = SubResource("GDScript_hftdg")
 metadata/_edit_group_ = true
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visibility_layer = 0
 shape = SubResource("CircleShape2D_8pou6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+scale = Vector2(0.15846, 0.172204)
 sprite_frames = SubResource("SpriteFrames_5fit4")
-
-[node name="YPF" type="Sprite2D" parent="."]
-texture_filter = 1
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("1_64jjg")
+animation = &"YPF"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

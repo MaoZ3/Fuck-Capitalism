@@ -1,18 +1,22 @@
-[gd_scene load_steps=9 format=3 uid="uid://bmvtluk2rwuin"]
+[gd_scene load_steps=11 format=3 uid="uid://bmvtluk2rwuin"]
 
 [ext_resource type="PackedScene" uid="uid://cep4sirsi5ehr" path="res://wig.tscn" id="1_vxiru"]
 [ext_resource type="PackedScene" uid="uid://mn34e5oqowro" path="res://motomami.tscn" id="2_w4str"]
 [ext_resource type="PackedScene" uid="uid://bxb41cnpmlpo7" path="res://estado.tscn" id="3_03f31"]
 [ext_resource type="PackedScene" uid="uid://cpsmkfbuvnwna" path="res://endwordl.tscn" id="4_jr8b4"]
+[ext_resource type="Texture2D" uid="uid://dydlq7hila3bq" path="res://back.jpg" id="5_3eor4"]
 
 [sub_resource type="GDScript" id="GDScript_fxg83"]
 script/source = "extends Node
-@export var estado_scena = PackedScene
 
+@export var estado = preload(\"res://estado.tscn\")
+
+var screen_size
 # Called when the node enters the scene tree for the first time.
-func _reaady():
+func _ready():
+	#screen_size = get_viewport_rect().size
 	new_game()
-	pass
+	
 func new_game():
 	$Wig.start($StartPosition.position)
 	$StartTimer.start()
@@ -23,11 +27,10 @@ func _process(delta):
 
 func _on_start_timer_timeout():
 	$estadoTimer.start()
-	
 
 func _on_estado_timer_timeout():
 		# Create a new instance of the Mob scene.
-	var est = estado_scena.instance()
+	var estado = preload(\"res://estado.tscn\").instantiate()	
 
 	# Choose a random location on Path2D.
 	var est_spawn_location = $Path2D/PathFollow2D
@@ -37,18 +40,18 @@ func _on_estado_timer_timeout():
 	var direction = est_spawn_location.rotation + PI / 2
 
 	# Set the mob's position to a random location.
-	est.position = est_spawn_location.position
+	estado.position = est_spawn_location.position
 
 	# Add some randomness to the direction.
 	direction += randf_range(-PI / 4, PI / 4)
-	est.rotation = direction
+	estado.rotation = direction
 
 	# Choose the velocity for the mob.
 	var velocity = Vector2(randf_range(150.0, 250.0), 0.0)
-	est.linear_velocity = velocity.rotated(direction)
+	estado.linear_velocity = velocity.rotated(direction)
 
 	# Spawn the mob by adding it to the Main scene.
-	add_child(estado_scena)
+	add_child(estado)
 	
 "
 
@@ -72,24 +75,29 @@ func _on_area_entered(area):
 
 [sub_resource type="Curve2D" id="Curve2D_d61g4"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1152, 0, 0, 0, 0, 0, 1152, 648, 0, 0, 0, 0, 0, 648, 0, 0, 0, 0, 0, 0)
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 477, 3, 0, 0, 0, 0, 486, 725, 0, 0, 0, 0, -4, 724, 0, 0, 0, 0, 0, 0)
 }
 point_count = 5
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_y0emt"]
+radius = 8.52436
+
 [node name="Argentina" type="Node"]
 script = SubResource("GDScript_fxg83")
-estado_scena = ExtResource("3_03f31")
+
+[node name="Back" type="Sprite2D" parent="."]
+show_behind_parent = true
+texture_filter = 1
+position = Vector2(242, 372)
+texture = ExtResource("5_3eor4")
 
 [node name="Wig" parent="." instance=ExtResource("1_vxiru")]
-position = Vector2(581, 332)
+position = Vector2(357, 270)
 
-[node name="Motomami" parent="Wig" instance=ExtResource("2_w4str")]
-
-[node name="estado" parent="." instance=ExtResource("3_03f31")]
-position = Vector2(485, 28)
+[node name="Area2D" parent="Wig" instance=ExtResource("2_w4str")]
 
 [node name="limitwordl" parent="." instance=ExtResource("4_jr8b4")]
-position = Vector2(0, 649)
+position = Vector2(226, 726)
 script = SubResource("GDScript_llgsy")
 metadata/_edit_group_ = true
 
@@ -100,11 +108,24 @@ shape = SubResource("WorldBoundaryShape2D_pgskj")
 curve = SubResource("Curve2D_d61g4")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+rotation = 0.00628923
 
 [node name="estadoTimer" type="Timer" parent="."]
+wait_time = 0.5
 
 [node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
 one_shot = true
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(240, 450)
+
+[node name="estado" parent="." instance=ExtResource("3_03f31")]
+position = Vector2(325, 226)
+scale = Vector2(0.943636, 1.12446)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="estado"]
+shape = SubResource("CircleShape2D_y0emt")
 
 [connection signal="area_entered" from="limitwordl" to="limitwordl" method="_on_area_entered"]
 [connection signal="body_entered" from="limitwordl" to="limitwordl" method="_on_body_entered"]

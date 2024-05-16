@@ -3,7 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://bgal3oao6q7wq" path="res://motomilei.svg" id="1_wmgub"]
 
 [sub_resource type="GDScript" id="GDScript_hctsb"]
-script/source = "extends Area2D
+script/source = "extends Node2D
+
+@export var speed = 400 
 
 var motosierra: Node2D
 var marker: Node2D
@@ -12,17 +14,17 @@ func _ready() -> void:
 	# Asigna los nodos \"motoMami\" y \"Marker2D\" desde la escena
 	motosierra = $\".\"
 	marker = $motopivot
-
+	pass
+	
 func _process(delta: float) -> void:
+	
+	var velocity = global_position * speed
 	# Obtén la posición global del cursor del mouse
 	var mouse_position = get_global_mouse_position()
-
 	# Calcula la dirección desde la motosierra hasta el cursor del mouse
 	var direction = (mouse_position - motosierra.global_position).normalized()
-
 	# Orienta la motosierra hacia la dirección calculada
 	motosierra.look_at(motosierra.global_position + direction)
-
 	# Ajusta la posición de la motosierra según el nodo Marker2D
 	motosierra.global_position = marker.global_position
 
@@ -48,7 +50,13 @@ func _process(delta: float) -> void:
 	# Orienta el arma hacia la dirección calculada
 	motomami.look_at(motomami.global_position + direction)\"\"\"
 
-
+\"\"\" 
+	if velocity.x != 0:
+		$Sprite2D.flip_v = false
+		$Sprite2D.flip_h = velocity.x < 0
+	elif velocity.y != 0:
+		$Sprite2D.flip_v = velocity.y > 0
+\"\"\"
 
 
 \"\"\"# Called when the node enters the scene tree for the first time.
@@ -65,20 +73,26 @@ func _process(delta):
 	position = mouse_position\"\"\"
 
 
-func _on_area_entered(area):
-	pass # Replace with function body.
+
+
+
+
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m2av0"]
 radius = 11.6561
 height = 111.891
 
-[node name="Area2D" type="Area2D"]
+[node name="motoMami" type="Node2D"]
 rotation = -0.0189588
+scale = Vector2(0.698047, 0.698047)
 script = SubResource("GDScript_hctsb")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(2.59e-08, -1.36596e-06)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-96, -4)
 rotation = -1.06192
 shape = SubResource("CapsuleShape2D_m2av0")
@@ -91,5 +105,3 @@ position = Vector2(-95.9413, -3.35775)
 rotation = 0.0111507
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_wmgub")
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
