@@ -1,13 +1,22 @@
-[gd_scene load_steps=26 format=3 uid="uid://bxb41cnpmlpo7"]
+[gd_scene load_steps=22 format=3 uid="uid://bxb41cnpmlpo7"]
 
 [ext_resource type="Texture2D" uid="uid://dm7kepswdv0r" path="res://ypf-logo.svg" id="1_64jjg"]
-[ext_resource type="Texture2D" uid="uid://dcgibsd36xebo" path="res://Explosion SpriteSheet.png" id="1_fxkwl"]
 [ext_resource type="Texture2D" uid="uid://c0kl5sw47mmyr" path="res://92f894ed2278d6036acb3cdf3db57770.jpg" id="1_mj6hy"]
 [ext_resource type="Texture2D" uid="uid://covyrg7wi25sp" path="res://afa.png" id="2_0mqr3"]
+[ext_resource type="Texture2D" uid="uid://b32rxoqxyqcx1" path="res://abuela.png" id="2_gb6l0"]
 [ext_resource type="Texture2D" uid="uid://cghsiheamli5c" path="res://download.png" id="3_ygktp"]
+[ext_resource type="Texture2D" uid="uid://u4nq6ktom61o" path="res://exp 800700/exp2d1.png" id="4_h312s"]
 [ext_resource type="Texture2D" uid="uid://cchjv6c5ipqqm" path="res://INTA.png" id="5_iq6c2"]
+[ext_resource type="Texture2D" uid="uid://blfttfpohngph" path="res://exp 800700/exp2d2.png" id="5_rseln"]
+[ext_resource type="Texture2D" uid="uid://bxaow0n8w61om" path="res://mastin-ingles-dmtprt.png" id="5_w0x4h"]
+[ext_resource type="Texture2D" uid="uid://csgp217a8w332" path="res://exp 800700/exp2d3.png" id="6_qoi0c"]
 [ext_resource type="Texture2D" uid="uid://ba6vvhbm6bkuv" path="res://SLRZ.png" id="6_yio7a"]
 [ext_resource type="Texture2D" uid="uid://pakvyj320hy7" path="res://uni.jpg" id="7_bwgkh"]
+[ext_resource type="Texture2D" uid="uid://wqh1trg8ofyx" path="res://exp 800700/exp2d4.png" id="7_wpfoh"]
+[ext_resource type="Texture2D" uid="uid://d03ey8n8tcibf" path="res://exp 800700/exp2d5.png" id="8_f5du0"]
+[ext_resource type="Texture2D" uid="uid://3w0chvuqw000" path="res://exp 800700/exp2d6.png" id="9_e2m8w"]
+[ext_resource type="Texture2D" uid="uid://b6uiqp5junxfc" path="res://exp 800700/exp2d7.png" id="10_lea2k"]
+[ext_resource type="Texture2D" uid="uid://6w8bm8u2oxrd" path="res://exp 800700/exp2d8.png" id="11_dqjsa"]
 
 [sub_resource type="GDScript" id="GDScript_hftdg"]
 script/source = "extends RigidBody2D
@@ -23,6 +32,7 @@ func _on_area_2d_area_entered(area):
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
+	
 	queue_free()
 	
 	#ramdoms estado
@@ -54,58 +64,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8pou6"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xgwx4"]
-atlas = ExtResource("1_fxkwl")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0da8k"]
-atlas = ExtResource("1_fxkwl")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_juq3o"]
-atlas = ExtResource("1_fxkwl")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3dnwl"]
-atlas = ExtResource("1_fxkwl")
-region = Rect2(0, 64, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6y333"]
-atlas = ExtResource("1_fxkwl")
-region = Rect2(64, 64, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vv5kh"]
-atlas = ExtResource("1_fxkwl")
-region = Rect2(128, 64, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kl1qh"]
-atlas = ExtResource("1_fxkwl")
-region = Rect2(192, 64, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_f28et"]
-atlas = ExtResource("1_fxkwl")
-region = Rect2(0, 128, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xav70"]
-atlas = ExtResource("1_fxkwl")
-region = Rect2(64, 128, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8yahd"]
-atlas = ExtResource("1_fxkwl")
-region = Rect2(128, 128, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5esbb"]
-atlas = ExtResource("1_fxkwl")
-region = Rect2(192, 128, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_grkeu"]
-atlas = ExtResource("1_fxkwl")
-region = Rect2(0, 192, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pmg2f"]
-atlas = ExtResource("1_fxkwl")
-region = Rect2(64, 192, 64, 64)
+radius = 4.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iupcn"]
 atlas = ExtResource("1_64jjg")
@@ -119,6 +78,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"AEROLINEARG",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_gb6l0")
+}],
+"loop": true,
+"name": &"Abuela",
 "speed": 5.0
 }, {
 "frames": [{
@@ -139,46 +106,44 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": null
+"texture": ExtResource("5_w0x4h")
+}],
+"loop": true,
+"name": &"Connan",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ygktp")
+}],
+"loop": true,
+"name": &"CorreoArg",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_h312s")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xgwx4")
+"texture": ExtResource("5_rseln")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0da8k")
+"texture": ExtResource("6_qoi0c")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_juq3o")
+"texture": ExtResource("7_wpfoh")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_3dnwl")
+"texture": ExtResource("8_f5du0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6y333")
+"texture": ExtResource("9_e2m8w")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vv5kh")
+"texture": ExtResource("10_lea2k")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kl1qh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_f28et")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xav70")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8yahd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5esbb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grkeu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pmg2f")
+"texture": ExtResource("11_dqjsa")
 }, {
 "duration": 1.0,
 "texture": null
@@ -236,9 +201,10 @@ shape = SubResource("CircleShape2D_8pou6")
 texture_filter = 1
 scale = Vector2(0.15846, 0.172204)
 sprite_frames = SubResource("SpriteFrames_5fit4")
-animation = &"YPF"
+animation = &"Connan"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

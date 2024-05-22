@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://bmvtluk2rwuin"]
+[gd_scene load_steps=9 format=3 uid="uid://bmvtluk2rwuin"]
 
 [ext_resource type="PackedScene" uid="uid://cep4sirsi5ehr" path="res://wig.tscn" id="1_vxiru"]
 [ext_resource type="PackedScene" uid="uid://mn34e5oqowro" path="res://motomami.tscn" id="2_w4str"]
-[ext_resource type="PackedScene" uid="uid://bxb41cnpmlpo7" path="res://estado.tscn" id="3_03f31"]
 [ext_resource type="PackedScene" uid="uid://cpsmkfbuvnwna" path="res://endwordl.tscn" id="4_jr8b4"]
 [ext_resource type="Texture2D" uid="uid://dydlq7hila3bq" path="res://back.jpg" id="5_3eor4"]
 
@@ -30,7 +29,7 @@ func _on_start_timer_timeout():
 
 func _on_estado_timer_timeout():
 		# Create a new instance of the Mob scene.
-	var estado = preload(\"res://estado.tscn\").instantiate()	
+	var estado = preload(\"res://estado.tscn\").instantiate()
 
 	# Choose a random location on Path2D.
 	var est_spawn_location = $Path2D/PathFollow2D
@@ -75,12 +74,9 @@ func _on_area_entered(area):
 
 [sub_resource type="Curve2D" id="Curve2D_d61g4"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 477, 3, 0, 0, 0, 0, 486, 725, 0, 0, 0, 0, -4, 724, 0, 0, 0, 0, 0, 0)
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 969, -1, 0, 0, 0, 0, 972, 729, 0, 0, 0, 0, -4, 724, 0, 0, 0, 0, -6, 340, 0, 0, 0, 0, -5.85291, 321.157, 0, 0, 0, 0, 0, 0)
 }
-point_count = 5
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_y0emt"]
-radius = 8.52436
+point_count = 7
 
 [node name="Argentina" type="Node"]
 script = SubResource("GDScript_fxg83")
@@ -89,6 +85,18 @@ script = SubResource("GDScript_fxg83")
 show_behind_parent = true
 texture_filter = 1
 position = Vector2(242, 372)
+texture = ExtResource("5_3eor4")
+
+[node name="Back" type="Sprite2D" parent="Back"]
+show_behind_parent = true
+texture_filter = 1
+position = Vector2(221, -1)
+texture = ExtResource("5_3eor4")
+
+[node name="Back" type="Sprite2D" parent="Back/Back"]
+show_behind_parent = true
+texture_filter = 1
+position = Vector2(231, -4)
 texture = ExtResource("5_3eor4")
 
 [node name="Wig" parent="." instance=ExtResource("1_vxiru")]
@@ -108,7 +116,7 @@ shape = SubResource("WorldBoundaryShape2D_pgskj")
 curve = SubResource("Curve2D_d61g4")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-rotation = 0.00628923
+rotation = -0.00103199
 
 [node name="estadoTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -118,14 +126,7 @@ wait_time = 2.0
 one_shot = true
 
 [node name="StartPosition" type="Marker2D" parent="."]
-position = Vector2(240, 450)
-
-[node name="estado" parent="." instance=ExtResource("3_03f31")]
-position = Vector2(325, 226)
-scale = Vector2(0.943636, 1.12446)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="estado"]
-shape = SubResource("CircleShape2D_y0emt")
+position = Vector2(357, 620)
 
 [connection signal="area_entered" from="limitwordl" to="limitwordl" method="_on_area_entered"]
 [connection signal="body_entered" from="limitwordl" to="limitwordl" method="_on_body_entered"]
