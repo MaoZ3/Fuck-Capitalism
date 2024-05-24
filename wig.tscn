@@ -8,6 +8,7 @@ radius = 9.0
 height = 18.0
 
 [node name="Wig" type="CharacterBody2D"]
+position = Vector2(15, 13)
 scale = Vector2(0.385883, 0.362418)
 script = ExtResource("1_tby73")
 metadata/_edit_group_ = true
@@ -19,10 +20,3 @@ shape = SubResource("CapsuleShape2D_6fi62")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_5j6ne")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
-limit_left = 0
-limit_top = 0
-limit_right = 900
-limit_bottom = 700

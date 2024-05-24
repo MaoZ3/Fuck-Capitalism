@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://mxsp7tma8p12"]
+
+[ext_resource type="Texture2D" uid="uid://kjiabs56dhtk" path="res://Gauge_Stomach_Empty.png" id="1_r10cl"]
+[ext_resource type="Texture2D" uid="uid://ysb0g6wpv6qu" path="res://Gauge_Stomach_Full.png" id="2_68dl3"]
+
+[node name="TextureProgressBar" type="TextureProgressBar"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -208.0
+offset_top = -206.0
+offset_right = 144.0
+offset_bottom = 114.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.412594, 0.412594)
+value = 50.0
+fill_mode = 2
+nine_patch_stretch = true
+texture_under = ExtResource("1_r10cl")
+texture_over = ExtResource("2_68dl3")

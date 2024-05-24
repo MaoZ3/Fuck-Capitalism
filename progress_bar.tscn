@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://crcbkcnhpbvjx"]
+
+[ext_resource type="Script" path="res://progress_bar.gd" id="1_2gatc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0jji4"]
+bg_color = Color(0.122252, 0.122252, 0.122252, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 11
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b6p60"]
+bg_color = Color(1, 0.100513, 0.00395076, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 20
+
+[node name="ProgressBar" type="ProgressBar"]
+texture_filter = 1
+offset_left = 641.0
+offset_top = 54.0
+offset_right = 749.0
+offset_bottom = 81.0
+scale = Vector2(2.29127, 0.592683)
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_styles/background = SubResource("StyleBoxFlat_0jji4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_b6p60")
+step = 0.1
+value = 100.0
+script = ExtResource("1_2gatc")

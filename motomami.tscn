@@ -6,6 +6,7 @@
 script/source = "extends Node2D
 
 @export var speed = 400 
+signal estMotocolision
 
 var motosierra: Node2D
 var marker: Node2D
@@ -27,6 +28,22 @@ func _process(delta: float) -> void:
 	motosierra.look_at(motosierra.global_position + direction)
 	# Ajusta la posición de la motosierra según el nodo Marker2D
 	motosierra.global_position = marker.global_position
+
+func _on_area_2d_body_entered(body):
+	#emit_signal(\"estMotocolision\")
+	print(\"motoma\")
+	pass # Replace with function body.
+
+
+func _on_est_motocolision():
+	pass # Replace with function body.
+
+
+
+
+
+
+
 
 
 
@@ -77,6 +94,10 @@ func _process(delta):
 
 
 
+
+
+
+
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m2av0"]
@@ -105,3 +126,6 @@ position = Vector2(-95.9413, -3.35775)
 rotation = 0.0111507
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_wmgub")
+
+[connection signal="estMotocolision" from="." to="." method="_on_est_motocolision"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

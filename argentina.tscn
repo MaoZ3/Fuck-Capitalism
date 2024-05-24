@@ -1,28 +1,29 @@
-[gd_scene load_steps=9 format=3 uid="uid://bmvtluk2rwuin"]
+[gd_scene load_steps=12 format=3 uid="uid://bmvtluk2rwuin"]
 
+[ext_resource type="PackedScene" uid="uid://crcbkcnhpbvjx" path="res://progress_bar.tscn" id="1_kiqhf"]
 [ext_resource type="PackedScene" uid="uid://cep4sirsi5ehr" path="res://wig.tscn" id="1_vxiru"]
 [ext_resource type="PackedScene" uid="uid://mn34e5oqowro" path="res://motomami.tscn" id="2_w4str"]
+[ext_resource type="PackedScene" uid="uid://b2cvwmtpm6hib" path="res://camera_2d.tscn" id="3_t8pbh"]
 [ext_resource type="PackedScene" uid="uid://cpsmkfbuvnwna" path="res://endwordl.tscn" id="4_jr8b4"]
 [ext_resource type="Texture2D" uid="uid://dydlq7hila3bq" path="res://back.jpg" id="5_3eor4"]
+[ext_resource type="PackedScene" uid="uid://2lvso0ngr4jw" path="res://hud.tscn" id="7_lgnxp"]
 
 [sub_resource type="GDScript" id="GDScript_fxg83"]
 script/source = "extends Node
 
 @export var estado = preload(\"res://estado.tscn\")
-
+@export var hud = PackedScene
 var screen_size
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	#screen_size = get_viewport_rect().size
-	new_game()
-	
+
+
+
+func game_over():
+	$estadoTimer.stop()
+
 func new_game():
 	$Wig.start($StartPosition.position)
 	$StartTimer.start()
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+	$Hud.show_message(\"Get Ready!\")
 
 func _on_start_timer_timeout():
 	$estadoTimer.start()
@@ -71,6 +72,7 @@ func _on_area_entered(area):
 "
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_pgskj"]
+distance = 1.0
 
 [sub_resource type="Curve2D" id="Curve2D_d61g4"]
 _data = {
@@ -80,6 +82,11 @@ point_count = 7
 
 [node name="Argentina" type="Node"]
 script = SubResource("GDScript_fxg83")
+hud = ExtResource("7_lgnxp")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ProgressBar" parent="CanvasLayer" instance=ExtResource("1_kiqhf")]
 
 [node name="Back" type="Sprite2D" parent="."]
 show_behind_parent = true
@@ -100,9 +107,17 @@ position = Vector2(231, -4)
 texture = ExtResource("5_3eor4")
 
 [node name="Wig" parent="." instance=ExtResource("1_vxiru")]
-position = Vector2(357, 270)
+position = Vector2(462, 407)
 
-[node name="Area2D" parent="Wig" instance=ExtResource("2_w4str")]
+[node name="Motomami" parent="Wig" instance=ExtResource("2_w4str")]
+
+[node name="Camera2D" parent="Wig" instance=ExtResource("3_t8pbh")]
+limit_left = 0
+limit_top = 0
+limit_right = 950
+limit_bottom = 720
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
 
 [node name="limitwordl" parent="." instance=ExtResource("4_jr8b4")]
 position = Vector2(226, 726)
@@ -126,9 +141,14 @@ wait_time = 2.0
 one_shot = true
 
 [node name="StartPosition" type="Marker2D" parent="."]
-position = Vector2(357, 620)
+position = Vector2(842, 627)
+
+[node name="Hud" parent="." instance=ExtResource("7_lgnxp")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="area_entered" from="limitwordl" to="limitwordl" method="_on_area_entered"]
 [connection signal="body_entered" from="limitwordl" to="limitwordl" method="_on_body_entered"]
 [connection signal="timeout" from="estadoTimer" to="." method="_on_estado_timer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="start_game" from="Hud" to="." method="new_game"]

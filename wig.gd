@@ -1,6 +1,11 @@
 extends CharacterBody2D
 
 @export var speed = 400
+var screen_size
+
+
+func _ready():
+	screen_size = get_viewport_rect().size
 
 func get_input():
 	var input_direction = Input.get_vector("left", "right", "up", "down")
@@ -21,6 +26,7 @@ func new_game():
 	$StartTimer.start()
 
 func _physics_process(_delta):
+	position = position.clamp(Vector2.ZERO, screen_size)
 	var input_direction = get_input()
 	
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bxb41cnpmlpo7"]
+[gd_scene load_steps=23 format=3 uid="uid://bxb41cnpmlpo7"]
 
 [ext_resource type="Texture2D" uid="uid://dm7kepswdv0r" path="res://ypf-logo.svg" id="1_64jjg"]
 [ext_resource type="Texture2D" uid="uid://c0kl5sw47mmyr" path="res://92f894ed2278d6036acb3cdf3db57770.jpg" id="1_mj6hy"]
@@ -17,9 +17,12 @@
 [ext_resource type="Texture2D" uid="uid://3w0chvuqw000" path="res://exp 800700/exp2d6.png" id="9_e2m8w"]
 [ext_resource type="Texture2D" uid="uid://b6uiqp5junxfc" path="res://exp 800700/exp2d7.png" id="10_lea2k"]
 [ext_resource type="Texture2D" uid="uid://6w8bm8u2oxrd" path="res://exp 800700/exp2d8.png" id="11_dqjsa"]
+[ext_resource type="AudioStream" uid="uid://rt5mkd21qena" path="res://Explosion7.wav" id="18_g6gj3"]
 
 [sub_resource type="GDScript" id="GDScript_hftdg"]
 script/source = "extends RigidBody2D
+
+
 
 
 func _ready():
@@ -28,12 +31,13 @@ func _ready():
 
 
 func _on_area_2d_area_entered(area):
+	
 	$AnimatedSprite2D.play(\"Explo\")
-
+	$AudioStreamPlayer.play()
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
-	
 	queue_free()
+	
 	
 	#ramdoms estado
 	\"\"\" 
@@ -201,10 +205,14 @@ shape = SubResource("CircleShape2D_8pou6")
 texture_filter = 1
 scale = Vector2(0.15846, 0.172204)
 sprite_frames = SubResource("SpriteFrames_5fit4")
-animation = &"Connan"
+animation = &"CorreoArg"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 visible = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("18_g6gj3")
+max_distance = 300.0
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
