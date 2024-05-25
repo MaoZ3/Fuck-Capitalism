@@ -1,12 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://bmvtluk2rwuin"]
+[gd_scene load_steps=14 format=3 uid="uid://bmvtluk2rwuin"]
 
 [ext_resource type="PackedScene" uid="uid://crcbkcnhpbvjx" path="res://progress_bar.tscn" id="1_kiqhf"]
 [ext_resource type="PackedScene" uid="uid://cep4sirsi5ehr" path="res://wig.tscn" id="1_vxiru"]
 [ext_resource type="PackedScene" uid="uid://mn34e5oqowro" path="res://motomami.tscn" id="2_w4str"]
 [ext_resource type="PackedScene" uid="uid://b2cvwmtpm6hib" path="res://camera_2d.tscn" id="3_t8pbh"]
 [ext_resource type="PackedScene" uid="uid://cpsmkfbuvnwna" path="res://endwordl.tscn" id="4_jr8b4"]
-[ext_resource type="Texture2D" uid="uid://dydlq7hila3bq" path="res://back.jpg" id="5_3eor4"]
 [ext_resource type="PackedScene" uid="uid://2lvso0ngr4jw" path="res://hud.tscn" id="7_lgnxp"]
+[ext_resource type="Texture2D" uid="uid://drn2odio4202d" path="res://[ADA]#9_2_roof_50x32_100ppi_gridless_day_FreeVersion.jpg" id="8_eu5wv"]
 
 [sub_resource type="GDScript" id="GDScript_fxg83"]
 script/source = "extends Node
@@ -15,18 +15,23 @@ script/source = "extends Node
 @export var hud = PackedScene
 var screen_size
 
-
+func _ready():
+	pass
+	
 
 func game_over():
 	$estadoTimer.stop()
+	
 
 func new_game():
 	$Wig.start($StartPosition.position)
 	$StartTimer.start()
 	$Hud.show_message(\"Get Ready!\")
+	
 
 func _on_start_timer_timeout():
 	$estadoTimer.start()
+	
 
 func _on_estado_timer_timeout():
 		# Create a new instance of the Mob scene.
@@ -55,20 +60,20 @@ func _on_estado_timer_timeout():
 	
 "
 
+[sub_resource type="Gradient" id="Gradient_2uw7s"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_exdya"]
+gradient = SubResource("Gradient_2uw7s")
+
 [sub_resource type="GDScript" id="GDScript_llgsy"]
 script/source = "extends Area2D
 
 @onready var timer = $Timer
 
-
 func _on_area_entered(area):
 	print(\"aqui\")
 	$Timer
-
-
-\"\"\"func _on_body_entered(body):
-	print(\"aqui\")
-	pass # Replace with function body.\"\"\"
+	
 "
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_pgskj"]
@@ -84,27 +89,25 @@ point_count = 7
 script = SubResource("GDScript_fxg83")
 hud = ExtResource("7_lgnxp")
 
+[node name="PointLight2D" type="PointLight2D" parent="."]
+texture_filter = 1
+position = Vector2(568.407, 324.689)
+rotation = -1.27235
+scale = Vector2(16.7217, 15.5164)
+skew = 0.0401426
+shadow_enabled = true
+shadow_filter_smooth = 25.9
+texture = SubResource("GradientTexture2D_exdya")
+height = 50.0
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ProgressBar" parent="CanvasLayer" instance=ExtResource("1_kiqhf")]
 
-[node name="Back" type="Sprite2D" parent="."]
-show_behind_parent = true
-texture_filter = 1
-position = Vector2(242, 372)
-texture = ExtResource("5_3eor4")
-
-[node name="Back" type="Sprite2D" parent="Back"]
-show_behind_parent = true
-texture_filter = 1
-position = Vector2(221, -1)
-texture = ExtResource("5_3eor4")
-
-[node name="Back" type="Sprite2D" parent="Back/Back"]
-show_behind_parent = true
-texture_filter = 1
-position = Vector2(231, -4)
-texture = ExtResource("5_3eor4")
+[node name="BackGround" type="Sprite2D" parent="."]
+position = Vector2(518, 404)
+scale = Vector2(0.237026, 0.237026)
+texture = ExtResource("8_eu5wv")
 
 [node name="Wig" parent="." instance=ExtResource("1_vxiru")]
 position = Vector2(462, 407)
@@ -141,11 +144,9 @@ wait_time = 2.0
 one_shot = true
 
 [node name="StartPosition" type="Marker2D" parent="."]
-position = Vector2(842, 627)
+position = Vector2(779, 631)
 
 [node name="Hud" parent="." instance=ExtResource("7_lgnxp")]
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="area_entered" from="limitwordl" to="limitwordl" method="_on_area_entered"]
 [connection signal="body_entered" from="limitwordl" to="limitwordl" method="_on_body_entered"]

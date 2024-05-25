@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://fmvx6jnqefpj"
+path="res://.godot/imported/al soltar click.MP3-bdcda28a280e54a146930e6d7c7d842a.mp3str"
+
+[deps]
+
+source_file="res://al soltar click.MP3"
+dest_files=["res://.godot/imported/al soltar click.MP3-bdcda28a280e54a146930e6d7c7d842a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

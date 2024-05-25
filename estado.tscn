@@ -22,49 +22,20 @@
 [sub_resource type="GDScript" id="GDScript_hftdg"]
 script/source = "extends RigidBody2D
 
-
-
-
 func _ready():
 	var estado_types = $AnimatedSprite2D.sprite_frames.get_animation_names()
 	$AnimatedSprite2D.play(estado_types[randi() % estado_types.size()])
-
+	
 
 func _on_area_2d_area_entered(area):
 	
 	$AnimatedSprite2D.play(\"Explo\")
 	$AudioStreamPlayer.play()
+	
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	queue_free()
 	
-	
-	#ramdoms estado
-	\"\"\" 
-	#var estado_types = $AnimatedSprite2D.sprite_frames.get_animation_names()
-	#$AnimatedSprite2D.play(estado_types[randi() % estado_types.size()])
-	\"\"\"
-
-\"\"\"func _on_Enemy_destroyed():
-	# Este método se llama cuando el nodo \"Enemy\" es destruido
-	var new_enemy_instance = preload(\"res://estado.tscn\").instance()
-	# Agrega la nueva instancia al árbol de escenas
-	add_child(new_enemy_instance)\"\"\"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8pou6"]
