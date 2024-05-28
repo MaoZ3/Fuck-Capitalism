@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://8vuksexc7kvu"
+path="res://.godot/imported/Y2meta.app - Javier Milei - Hola A Todos! Yo Soy El León! (Audio Oficial) (128 kbps).mp3-41750416152523da910afedd70a72a24.mp3str"
+
+[deps]
+
+source_file="res://Y2meta.app - Javier Milei - Hola A Todos! Yo Soy El León! (Audio Oficial) (128 kbps).mp3"
+dest_files=["res://.godot/imported/Y2meta.app - Javier Milei - Hola A Todos! Yo Soy El León! (Audio Oficial) (128 kbps).mp3-41750416152523da910afedd70a72a24.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

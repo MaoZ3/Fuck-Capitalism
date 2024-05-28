@@ -6,7 +6,7 @@
 script/source = "extends Node2D
 
 @export var speed = 400 
-signal estMotocolision
+signal est_Motocolision
 
 var motosierra: Node2D
 var marker: Node2D
@@ -39,7 +39,8 @@ func _on_area_2d_body_entered(body):
 	
 
 func _on_est_motocolision():
-	pass # Replace with function body.
+	print(\"motoma\")
+	
 
 "
 
@@ -70,5 +71,4 @@ rotation = 0.0111507
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_wmgub")
 
-[connection signal="estMotocolision" from="." to="." method="_on_est_motocolision"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

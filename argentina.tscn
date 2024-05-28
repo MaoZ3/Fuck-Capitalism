@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bmvtluk2rwuin"]
+[gd_scene load_steps=15 format=3 uid="uid://bmvtluk2rwuin"]
 
 [ext_resource type="PackedScene" uid="uid://crcbkcnhpbvjx" path="res://progress_bar.tscn" id="1_kiqhf"]
 [ext_resource type="PackedScene" uid="uid://cep4sirsi5ehr" path="res://wig.tscn" id="1_vxiru"]
@@ -7,15 +7,20 @@
 [ext_resource type="PackedScene" uid="uid://cpsmkfbuvnwna" path="res://endwordl.tscn" id="4_jr8b4"]
 [ext_resource type="PackedScene" uid="uid://2lvso0ngr4jw" path="res://hud.tscn" id="7_lgnxp"]
 [ext_resource type="Texture2D" uid="uid://drn2odio4202d" path="res://[ADA]#9_2_roof_50x32_100ppi_gridless_day_FreeVersion.jpg" id="8_eu5wv"]
+[ext_resource type="AudioStream" uid="uid://8vuksexc7kvu" path="res://Y2meta.app - Javier Milei - Hola A Todos! Yo Soy El León! (Audio Oficial) (128 kbps).mp3" id="8_jovw1"]
 
 [sub_resource type="GDScript" id="GDScript_fxg83"]
 script/source = "extends Node
 
 @export var estado = preload(\"res://estado.tscn\")
 @export var hud = PackedScene
+@export var motomo = PackedScene
+
+
 var screen_size
 
 func _ready():
+	$cojermanasound.play()
 	pass
 	
 
@@ -28,6 +33,9 @@ func new_game():
 	$StartTimer.start()
 	$Hud.show_message(\"Get Ready!\")
 	
+func motoma():
+	var motomo = preload(\"res://motomami.tscn\").instantiate()
+	motomo.connect(\"est_Motocolision\", Callable(self,\"_on_est_motocolision\"))
 
 func _on_start_timer_timeout():
 	$estadoTimer.start()
@@ -88,6 +96,7 @@ point_count = 7
 [node name="Argentina" type="Node"]
 script = SubResource("GDScript_fxg83")
 hud = ExtResource("7_lgnxp")
+motomo = ExtResource("2_w4str")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 texture_filter = 1
@@ -102,11 +111,29 @@ height = 50.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="ProgressBar" parent="CanvasLayer" instance=ExtResource("1_kiqhf")]
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 975.0
+offset_bottom = 729.0
+
+[node name="ProgressBar" parent="CanvasLayer/Control" instance=ExtResource("1_kiqhf")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -363.0
+offset_top = 88.0
+offset_right = -255.0
+offset_bottom = 115.0
+grow_horizontal = 0
+step = 1.0
+value = 50.0
+show_percentage = false
 
 [node name="BackGround" type="Sprite2D" parent="."]
-position = Vector2(518, 404)
-scale = Vector2(0.237026, 0.237026)
+position = Vector2(529.718, 383.379)
+scale = Vector2(0.242513, 0.242263)
 texture = ExtResource("8_eu5wv")
 
 [node name="Wig" parent="." instance=ExtResource("1_vxiru")]
@@ -147,6 +174,10 @@ one_shot = true
 position = Vector2(779, 631)
 
 [node name="Hud" parent="." instance=ExtResource("7_lgnxp")]
+
+[node name="cojermanasound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_jovw1")
+volume_db = -25.258
 
 [connection signal="area_entered" from="limitwordl" to="limitwordl" method="_on_area_entered"]
 [connection signal="body_entered" from="limitwordl" to="limitwordl" method="_on_body_entered"]
