@@ -1,17 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://mn34e5oqowro"]
+[gd_scene load_steps=5 format=3 uid="uid://mn34e5oqowro"]
 
+[ext_resource type="PackedScene" uid="uid://2lvso0ngr4jw" path="res://hud.tscn" id="1_ugs2x"]
 [ext_resource type="Texture2D" uid="uid://bgal3oao6q7wq" path="res://motomilei.svg" id="1_wmgub"]
 
 [sub_resource type="GDScript" id="GDScript_hctsb"]
 script/source = "extends Node2D
-
+@export var hud = PackedScene
 @export var speed = 400 
 signal est_Motocolision
+@onready var progress_bar = $Control/ProgressBar
 
+
+#var progress_bar = preload(\"res://hud.tscn\").instantiate()
 var motosierra: Node2D
 var marker: Node2D
 
 func _ready() -> void:
+	
+	
 	# Asigna los nodos \"motoMami\" y \"Marker2D\" desde la escena
 	motosierra = $\".\"
 	marker = $motopivot
@@ -30,18 +36,26 @@ func _process(delta: float) -> void:
 	# Ajusta la posición de la motosierra según el nodo Marker2D
 	motosierra.global_position = marker.global_position
 	
-
+\"\"\"
 func _on_area_2d_body_entered(body):
-	if body is RigidBody2D:
-		print(\"motoma\")
-
 	pass # Replace with function body.
+
+\"\"\"
+
 	
 
 func _on_est_motocolision():
-	print(\"motoma\")
+	progress_bar.value -= 10
+	
+	print(\"ON_EST_MOTOCOLI\")
 	
 
+
+
+func _on_area_2d_area_entered(area):
+	emit_signal(\"est_Motocolision\")
+	print(\"epa\")
+	pass # Replace with function body.
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m2av0"]
@@ -52,6 +66,7 @@ height = 111.891
 rotation = -0.0189588
 scale = Vector2(0.698047, 0.698047)
 script = SubResource("GDScript_hctsb")
+hud = ExtResource("1_ugs2x")
 metadata/_edit_group_ = true
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -71,4 +86,6 @@ rotation = 0.0111507
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_wmgub")
 
+[connection signal="est_Motocolision" from="." to="." method="_on_est_motocolision"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -1,6 +1,5 @@
-[gd_scene load_steps=15 format=3 uid="uid://bmvtluk2rwuin"]
+[gd_scene load_steps=14 format=3 uid="uid://bmvtluk2rwuin"]
 
-[ext_resource type="PackedScene" uid="uid://crcbkcnhpbvjx" path="res://progress_bar.tscn" id="1_kiqhf"]
 [ext_resource type="PackedScene" uid="uid://cep4sirsi5ehr" path="res://wig.tscn" id="1_vxiru"]
 [ext_resource type="PackedScene" uid="uid://mn34e5oqowro" path="res://motomami.tscn" id="2_w4str"]
 [ext_resource type="PackedScene" uid="uid://b2cvwmtpm6hib" path="res://camera_2d.tscn" id="3_t8pbh"]
@@ -16,11 +15,10 @@ script/source = "extends Node
 @export var hud = PackedScene
 @export var motomo = PackedScene
 
-
 var screen_size
 
 func _ready():
-	$cojermanasound.play()
+	#$cojermanasound.play()
 	pass
 	
 
@@ -32,10 +30,14 @@ func new_game():
 	$Wig.start($StartPosition.position)
 	$StartTimer.start()
 	$Hud.show_message(\"Get Ready!\")
+	#$Hud/Control/ProgressBar
 	
+
+\"\"\"
 func motoma():
 	var motomo = preload(\"res://motomami.tscn\").instantiate()
 	motomo.connect(\"est_Motocolision\", Callable(self,\"_on_est_motocolision\"))
+\"\"\"
 
 func _on_start_timer_timeout():
 	$estadoTimer.start()
@@ -98,6 +100,8 @@ script = SubResource("GDScript_fxg83")
 hud = ExtResource("7_lgnxp")
 motomo = ExtResource("2_w4str")
 
+[node name="Hud" parent="." instance=ExtResource("7_lgnxp")]
+
 [node name="PointLight2D" type="PointLight2D" parent="."]
 texture_filter = 1
 position = Vector2(568.407, 324.689)
@@ -109,28 +113,6 @@ shadow_filter_smooth = 25.9
 texture = SubResource("GradientTexture2D_exdya")
 height = 50.0
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Control" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 975.0
-offset_bottom = 729.0
-
-[node name="ProgressBar" parent="CanvasLayer/Control" instance=ExtResource("1_kiqhf")]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -363.0
-offset_top = 88.0
-offset_right = -255.0
-offset_bottom = 115.0
-grow_horizontal = 0
-step = 1.0
-value = 50.0
-show_percentage = false
-
 [node name="BackGround" type="Sprite2D" parent="."]
 position = Vector2(529.718, 383.379)
 scale = Vector2(0.242513, 0.242263)
@@ -140,6 +122,7 @@ texture = ExtResource("8_eu5wv")
 position = Vector2(462, 407)
 
 [node name="Motomami" parent="Wig" instance=ExtResource("2_w4str")]
+hud = null
 
 [node name="Camera2D" parent="Wig" instance=ExtResource("3_t8pbh")]
 limit_left = 0
@@ -173,14 +156,12 @@ one_shot = true
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(779, 631)
 
-[node name="Hud" parent="." instance=ExtResource("7_lgnxp")]
-
 [node name="cojermanasound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_jovw1")
 volume_db = -25.258
 
+[connection signal="start_game" from="Hud" to="." method="new_game"]
 [connection signal="area_entered" from="limitwordl" to="limitwordl" method="_on_area_entered"]
 [connection signal="body_entered" from="limitwordl" to="limitwordl" method="_on_body_entered"]
 [connection signal="timeout" from="estadoTimer" to="." method="_on_estado_timer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
-[connection signal="start_game" from="Hud" to="." method="new_game"]
