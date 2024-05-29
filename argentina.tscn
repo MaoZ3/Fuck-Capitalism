@@ -122,7 +122,6 @@ texture = ExtResource("8_eu5wv")
 position = Vector2(462, 407)
 
 [node name="Motomami" parent="Wig" instance=ExtResource("2_w4str")]
-hud = null
 
 [node name="Camera2D" parent="Wig" instance=ExtResource("3_t8pbh")]
 limit_left = 0

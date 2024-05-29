@@ -12,11 +12,16 @@ signal start_game
 @onready var progress_bar = $Control/ProgressBar
 
 func _ready():
-	progress_bar.value = 50
+	progress_bar.name = \"barrasalud\" 
 	
 	motomo.connect(\"est_Motocolision\", Callable(self,\"_on_est_motocolision\"))
 	
 	$Control/StartButton/AudioStreamPlayer.play()
+	
+	
+func Disminuirvida():
+	progress_bar.value -= 10
+	
 	
 	\"\"\"
 func _on_est_motocolision():
@@ -24,9 +29,7 @@ func _on_est_motocolision():
 	
 	pass\"\"\"
 	
-func _on_progress_bar_changed():
-	
-	pass
+
 func show_message(text):
 	$Control/Mensaje.text = text
 	$Control/Mensaje.show()
@@ -60,6 +63,11 @@ func _on_timer_timeout():
 
 
 
+
+
+func _on_progress_bar_value_changed(value):
+	progress_bar.value -= 10
+	pass # Replace with function body.
 "
 
 [node name="Hud" type="CanvasLayer"]
@@ -119,7 +127,7 @@ metadata/_edit_use_anchors_ = true
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Control/StartButton"]
 stream = ExtResource("2_l45hf")
 
-[node name="ProgressBar" type="ProgressBar" parent="Control"]
+[node name="ProgressBar" type="ProgressBar" parent="Control" groups=["barravida"]]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -139,5 +147,5 @@ wait_time = 2.0
 one_shot = true
 
 [connection signal="pressed" from="Control/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="changed" from="Control/ProgressBar" to="." method="_on_progress_bar_changed"]
+[connection signal="value_changed" from="Control/ProgressBar" to="." method="_on_progress_bar_value_changed"]
 [connection signal="timeout" from="Control/Timer" to="." method="_on_timer_timeout"]

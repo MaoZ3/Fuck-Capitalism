@@ -1,11 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://mn34e5oqowro"]
+[gd_scene load_steps=4 format=3 uid="uid://mn34e5oqowro"]
 
-[ext_resource type="PackedScene" uid="uid://2lvso0ngr4jw" path="res://hud.tscn" id="1_ugs2x"]
 [ext_resource type="Texture2D" uid="uid://bgal3oao6q7wq" path="res://motomilei.svg" id="1_wmgub"]
 
 [sub_resource type="GDScript" id="GDScript_hctsb"]
 script/source = "extends Node2D
-@export var hud = PackedScene
+#@export var hud = PackedScene
 @export var speed = 400 
 signal est_Motocolision
 @onready var progress_bar = $Control/ProgressBar
@@ -45,8 +44,8 @@ func _on_area_2d_body_entered(body):
 	
 
 func _on_est_motocolision():
-	progress_bar.value -= 10
 	
+	get_tree().get_nodes_in_group(\"barravida\")[0]._on_progress_bar_value_changed()
 	print(\"ON_EST_MOTOCOLI\")
 	
 
@@ -66,7 +65,6 @@ height = 111.891
 rotation = -0.0189588
 scale = Vector2(0.698047, 0.698047)
 script = SubResource("GDScript_hctsb")
-hud = ExtResource("1_ugs2x")
 metadata/_edit_group_ = true
 
 [node name="Area2D" type="Area2D" parent="."]
