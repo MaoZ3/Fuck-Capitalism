@@ -12,7 +12,7 @@ signal start_game
 @onready var progress_bar = $Control/ProgressBar
 
 func _ready():
-	progress_bar.name = \"barrasalud\" 
+
 	
 	motomo.connect(\"est_Motocolision\", Callable(self,\"_on_est_motocolision\"))
 	
@@ -20,7 +20,7 @@ func _ready():
 	
 	
 func Disminuirvida():
-	progress_bar.value -= 10
+	$ProgressBar.value -= 10
 	
 	
 	\"\"\"
@@ -66,12 +66,25 @@ func _on_timer_timeout():
 
 
 func _on_progress_bar_value_changed(value):
-	progress_bar.value -= 10
+
 	pass # Replace with function body.
 "
 
-[node name="Hud" type="CanvasLayer"]
+[node name="Hud" type="CanvasLayer" groups=["barravida"]]
 script = SubResource("GDScript_aq2or")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -356.0
+offset_top = 64.0
+offset_right = -64.0
+offset_bottom = 91.0
+grow_horizontal = 0
+value = 100.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -127,25 +140,10 @@ metadata/_edit_use_anchors_ = true
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Control/StartButton"]
 stream = ExtResource("2_l45hf")
 
-[node name="ProgressBar" type="ProgressBar" parent="Control" groups=["barravida"]]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -356.0
-offset_top = 64.0
-offset_right = -64.0
-offset_bottom = 91.0
-grow_horizontal = 0
-step = 10.0
-value = 100.0
-show_percentage = false
-metadata/_edit_use_anchors_ = true
-
 [node name="Timer" type="Timer" parent="Control"]
 wait_time = 2.0
 one_shot = true
 
+[connection signal="value_changed" from="ProgressBar" to="." method="_on_progress_bar_value_changed"]
 [connection signal="pressed" from="Control/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="value_changed" from="Control/ProgressBar" to="." method="_on_progress_bar_value_changed"]
 [connection signal="timeout" from="Control/Timer" to="." method="_on_timer_timeout"]

@@ -15,46 +15,46 @@ var motosierra: Node2D
 var marker: Node2D
 
 func _ready() -> void:
-	
-	
-	# Asigna los nodos \"motoMami\" y \"Marker2D\" desde la escena
-	motosierra = $\".\"
-	marker = $motopivot
-	pass
-	
+    
+    
+    # Asigna los nodos \"motoMami\" y \"Marker2D\" desde la escena
+    motosierra = $\".\"
+    marker = $motopivot
+    pass
+    
 
 func _process(delta: float) -> void:
-	
-	var velocity = global_position * speed
-	# Obtén la posición global del cursor del mouse
-	var mouse_position = get_global_mouse_position()
-	# Calcula la dirección desde la motosierra hasta el cursor del mouse
-	var direction = (mouse_position - motosierra.global_position).normalized()
-	# Orienta la motosierra hacia la dirección calculada
-	motosierra.look_at(motosierra.global_position + direction)
-	# Ajusta la posición de la motosierra según el nodo Marker2D
-	motosierra.global_position = marker.global_position
-	
+    
+    var velocity = global_position * speed
+    # Obtén la posición global del cursor del mouse
+    var mouse_position = get_global_mouse_position()
+    # Calcula la dirección desde la motosierra hasta el cursor del mouse
+    var direction = (mouse_position - motosierra.global_position).normalized()
+    # Orienta la motosierra hacia la dirección calculada
+    motosierra.look_at(motosierra.global_position + direction)
+    # Ajusta la posición de la motosierra según el nodo Marker2D
+    motosierra.global_position = marker.global_position
+    
 \"\"\"
 func _on_area_2d_body_entered(body):
-	pass # Replace with function body.
+    pass # Replace with function body.
 
 \"\"\"
 
-	
+    
 
 func _on_est_motocolision():
-	
-	get_tree().get_nodes_in_group(\"barravida\")[0]._on_progress_bar_value_changed()
-	print(\"ON_EST_MOTOCOLI\")
-	
+    
+    get_tree().get_nodes_in_group(\"barravida\")[0].Disminuirvida()
+    print(\"texto\")
+    
 
 
 
 func _on_area_2d_area_entered(area):
-	emit_signal(\"est_Motocolision\")
-	print(\"epa\")
-	pass # Replace with function body.
+    emit_signal(\"est_Motocolision\")
+    print(\"epa\")
+    pass # Replace with function body.
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m2av0"]
