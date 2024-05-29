@@ -6,6 +6,7 @@ var vidamax: int
 
 
 func _ready():
+	name = "progressBar"
 	vidamax = 100
 	#motomami.connect("estMotocolision", Callable(motomami, "_on_est_Motocolision"))
 	pass
