@@ -1,9 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://bmvtluk2rwuin"]
+[gd_scene load_steps=11 format=3 uid="uid://bmvtluk2rwuin"]
 
 [ext_resource type="PackedScene" uid="uid://cep4sirsi5ehr" path="res://wig.tscn" id="1_vxiru"]
 [ext_resource type="PackedScene" uid="uid://mn34e5oqowro" path="res://motomami.tscn" id="2_w4str"]
 [ext_resource type="PackedScene" uid="uid://b2cvwmtpm6hib" path="res://camera_2d.tscn" id="3_t8pbh"]
-[ext_resource type="PackedScene" uid="uid://cpsmkfbuvnwna" path="res://endwordl.tscn" id="4_jr8b4"]
 [ext_resource type="PackedScene" uid="uid://2lvso0ngr4jw" path="res://hud.tscn" id="7_lgnxp"]
 [ext_resource type="Texture2D" uid="uid://drn2odio4202d" path="res://[ADA]#9_2_roof_50x32_100ppi_gridless_day_FreeVersion.jpg" id="8_eu5wv"]
 [ext_resource type="AudioStream" uid="uid://8vuksexc7kvu" path="res://Y2meta.app - Javier Milei - Hola A Todos! Yo Soy El León! (Audio Oficial) (128 kbps).mp3" id="8_jovw1"]
@@ -75,20 +74,6 @@ func _on_estado_timer_timeout():
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_exdya"]
 gradient = SubResource("Gradient_2uw7s")
 
-[sub_resource type="GDScript" id="GDScript_llgsy"]
-script/source = "extends Area2D
-
-@onready var timer = $Timer
-
-func _on_area_entered(area):
-	print(\"aqui\")
-	$Timer
-	
-"
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_pgskj"]
-distance = 1.0
-
 [sub_resource type="Curve2D" id="Curve2D_d61g4"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 969, -1, 0, 0, 0, 0, 972, 729, 0, 0, 0, 0, -4, 724, 0, 0, 0, 0, -6, 340, 0, 0, 0, 0, -5.85291, 321.157, 0, 0, 0, 0, 0, 0)
@@ -131,14 +116,6 @@ limit_bottom = 720
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 
-[node name="limitwordl" parent="." instance=ExtResource("4_jr8b4")]
-position = Vector2(226, 726)
-script = SubResource("GDScript_llgsy")
-metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="limitwordl"]
-shape = SubResource("WorldBoundaryShape2D_pgskj")
-
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_d61g4")
 
@@ -160,7 +137,5 @@ stream = ExtResource("8_jovw1")
 volume_db = -25.258
 
 [connection signal="start_game" from="Hud" to="." method="new_game"]
-[connection signal="area_entered" from="limitwordl" to="limitwordl" method="_on_area_entered"]
-[connection signal="body_entered" from="limitwordl" to="limitwordl" method="_on_body_entered"]
 [connection signal="timeout" from="estadoTimer" to="." method="_on_estado_timer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]

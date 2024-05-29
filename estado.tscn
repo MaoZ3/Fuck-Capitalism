@@ -22,24 +22,57 @@
 [sub_resource type="GDScript" id="GDScript_hftdg"]
 script/source = "extends RigidBody2D
 
+var animations = []  # List of animation names
+
+
 func _ready():
-	var estado_types = $AnimatedSprite2D.sprite_frames.get_animation_names()
-	$AnimatedSprite2D.play(estado_types[randi() % estado_types.size()])
-	
+    var estado_types = $AnimatedSprite2D.sprite_frames.get_animation_names()
+
+    # Generate a random number
+    var random_index = randi() % estado_types.size()
+
+    # Ensure the random number is not 6
+    while random_index == 6:
+        random_index = randi() % estado_types.size()
+
+    # Play the animation using the generated index
+    $AnimatedSprite2D.play(estado_types[random_index])
+    $Area2D.connect(\"area_entered\",Callable(self, \"_on_area_2d_area_entered\"))
+    print(estado_types[random_index])
 
 func _on_area_2d_area_entered(area):
-	
-	$AnimatedSprite2D.play(\"Explo\")
-	$AudioStreamPlayer.play()
-	
+  if area is Node2D:
+    # Check if the colliding Node2D's name is \"motomami\"
+    if area.name == \"motomami\":
+      # Play the explosion animation and audio
+      $AnimatedSprite2D.play(\"Explo\")
+      $AudioStreamPlayer.play()
 
+      # Wait for the animation to finish playing
+      await $AnimatedSprite2D.animation_finished
+      queue_free()
+    # Optional: Handle collisions with other Node2Ds (if needed)
+
+
+    
 func _on_visible_on_screen_notifier_2d_screen_exited():
-	queue_free()
-	
+    queue_free()
+
+
+
+func _on_body_entered(body):
+    pass # Replace with function body.
+
+
+func _on_visible_on_screen_notifier_2d_child_entered_tree(node):
+    pass
+
+func _on_animated_sprite_2d_child_entered_tree(node):
+    pass # Replace with function body.
+
 "
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_8pou6"]
-radius = 4.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_abjj3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iupcn"]
 atlas = ExtResource("1_64jjg")
@@ -119,9 +152,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("11_dqjsa")
-}, {
-"duration": 1.0,
-"texture": null
 }],
 "loop": false,
 "name": &"Explo",
@@ -170,13 +200,13 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 visibility_layer = 0
-shape = SubResource("CircleShape2D_8pou6")
+shape = SubResource("RectangleShape2D_abjj3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(0.15846, 0.172204)
 sprite_frames = SubResource("SpriteFrames_5fit4")
-animation = &"CorreoArg"
+animation = &"Explo"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 visible = false
@@ -187,5 +217,8 @@ pitch_scale = 3.11
 max_distance = 300.0
 attenuation = 0.267943
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="child_entered_tree" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_child_entered_tree"]
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_frame_changed"]
+[connection signal="child_entered_tree" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_child_entered_tree"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
