@@ -12,60 +12,53 @@ signal start_game
 @onready var progress_bar = $Control/ProgressBar
 
 func _ready():
-  motomo.connect(\"est_Motocolision\", Callable(self, \"_on_est_motocolision\"))
-  $Control/StartButton/AudioStreamPlayer.play()
+    $Control/StartButton/AudioStreamPlayer.play()
 
 func Disminuirvida():
-  $ProgressBar.value -= 100
+    $ProgressBar.value -= 100
 
-  # Check if progress bar reaches 0 and restart the game if needed
-  if $ProgressBar.value <= 0:
-    show_game_over()
+    # Check if progress bar reaches 0 and restart the game if needed
+    if $ProgressBar.value <= 0:
+        show_game_over()
 
 func _on_est_motocolision():
-  print(\"moij\")
+    print(\"moij\")
 
 func show_message(text):
-  $Control/Mensaje.text = text
-  $Control/Mensaje.show()
-  # Disable processing of further mouse clicks until the message is hidden
-  set_process_input(false)
+    $Control/Mensaje.text = text
+    $Control/Mensaje.show()
+    # Disable processing of further mouse clicks until the message is hidden
+    set_process_input(false)
 
 func show_game_over():
-  # Call the original show_message with \"Game Over\" text
-  show_message(\"Game Over\")
-  # Connect to a mouse click signal to listen for clicks on the CanvasLayer
-  connect(\"mouse_clicked\", Callable(self, \"_on_mouse_clicked\"))
-
-func _on_mouse_clicked(_event):
-  # Mouse click detected, hide the message and restart the game
-  $Control/Mensaje.hide()
-  set_process_input(true)  # Re-enable processing of mouse clicks
-  _restart_game()
+    # Call the original show_message with \"Game Over\" text
+    $Control/StartButton.connect(\"pressed\", Callable(self, \"_on_start_button_pressed\"))
+    show_message(\"Game Over\")
+    # Enable processing of mouse clicks
+    set_process_input(true)
 
 func _on_start_button_pressed():
-  $Control/StartButton.hide()
-  start_game.emit()
-  $Control/StartButton/AudioStreamPlayer.play()
+    $Control/StartButton.hide()
+    emit_signal(\"start_game\")
+    $Control/StartButton/AudioStreamPlayer.play()
 
 func _on_timer_timeout():
-  pass
+    pass
 
-
-
+# This function is called whenever there is an input event.
+func _input(event):
+    if $ProgressBar.value <= 0:
+        if event is InputEventMouseButton:
+            if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+                if $Control/Mensaje.visible:
+                    _restart_game()
 
 func _restart_game():
-  # Emit a custom signal to indicate game restart (optional)
-  # get_tree().emit_signal(\"game_restart\")
+    # Reset progress bar value
+    $ProgressBar.value = 100  # Adjust the starting value as needed
 
-  # Reset progress bar value
-  $ProgressBar.value = 100  # Adjust the starting value as needed
-
-  # Option 1: Reload the scene (might take longer)
-  get_tree().reload_current_scene()
-
-  
-
+    # Option 1: Reload the scene (might take longer)
+    get_tree().reload_current_scene()
 "
 
 [node name="Hud" type="CanvasLayer" groups=["barravida"]]
@@ -142,6 +135,7 @@ stream = ExtResource("2_l45hf")
 wait_time = 2.0
 one_shot = true
 
+[connection signal="start_game" from="." to="." method="_on_start_game"]
 [connection signal="value_changed" from="ProgressBar" to="." method="_on_progress_bar_value_changed"]
 [connection signal="pressed" from="Control/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="Control/Timer" to="." method="_on_timer_timeout"]
