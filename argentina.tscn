@@ -27,8 +27,9 @@ func game_over():
 
 func new_game():
 	$Wig.start($StartPosition.position)
-	$StartTimer.start()
+
 	$Hud.show_message(\"Get Ready!\")
+	$StartTimer.start()
 	#$Hud/Control/ProgressBar
 	
 
@@ -128,6 +129,7 @@ wait_time = 0.5
 [node name="StartTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+autostart = true
 
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(779, 631)

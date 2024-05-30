@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://2lvso0ngr4jw"]
+[gd_scene load_steps=7 format=3 uid="uid://2lvso0ngr4jw"]
 
 [ext_resource type="FontFile" uid="uid://clupipx8mvy4k" path="res://PressStart2P-Regular.ttf" id="1_mtv2n"]
 [ext_resource type="AudioStream" uid="uid://3qeviimkkado" path="res://startgame.MP3" id="1_n84xg"]
@@ -13,7 +13,10 @@ signal start_game
 
 func _ready():
     $Control/StartButton/AudioStreamPlayer.play()
+ # Conectar la señal del personaje al HUD
 
+
+    
 func Disminuirvida():
     $ProgressBar.value -= 100
 
@@ -24,16 +27,23 @@ func Disminuirvida():
 func _on_est_motocolision():
     print(\"moij\")
 
+func _on_start_timer_timeout():
+    $estadoTimer.start()
+    
 func show_message(text):
     $Control/Mensaje.text = text
     $Control/Mensaje.show()
+    $Control/Timer.start() 
     # Disable processing of further mouse clicks until the message is hidden
     set_process_input(false)
+    # Start the message timer to hide the message after a delay
+
 
 func show_game_over():
     # Call the original show_message with \"Game Over\" text
     $Control/StartButton.connect(\"pressed\", Callable(self, \"_on_start_button_pressed\"))
-    show_message(\"Game Over\")
+    $Control/Mensaje.text = \"Game Over\"
+    $Control/Mensaje.show()
     # Enable processing of mouse clicks
     set_process_input(true)
 
@@ -43,6 +53,7 @@ func _on_start_button_pressed():
     $Control/StartButton/AudioStreamPlayer.play()
 
 func _on_timer_timeout():
+    $Control/Mensaje.hide()
     pass
 
 # This function is called whenever there is an input event.
@@ -61,6 +72,12 @@ func _restart_game():
     get_tree().reload_current_scene()
 "
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2nm61"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_scsqw"]
+bg_color = Color(1, 0, 0, 1)
+
 [node name="Hud" type="CanvasLayer" groups=["barravida"]]
 script = SubResource("GDScript_aq2or")
 
@@ -73,7 +90,9 @@ offset_top = 64.0
 offset_right = -64.0
 offset_bottom = 91.0
 grow_horizontal = 0
-value = 100.0
+theme_override_styles/background = SubResource("StyleBoxFlat_2nm61")
+theme_override_styles/fill = SubResource("StyleBoxFlat_scsqw")
+value = 50.0
 show_percentage = false
 metadata/_edit_use_anchors_ = true
 
@@ -103,7 +122,7 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0.913725, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_mtv2n")
 theme_override_font_sizes/font_size = 56
-text = "Mierdei"
+text = "mierdei"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
