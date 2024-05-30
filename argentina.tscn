@@ -17,7 +17,8 @@ script/source = "extends Node
 var screen_size
 
 func _ready():
-	#$cojermanasound.play()
+	
+	$cojermanasound.play()
 	pass
 	
 
