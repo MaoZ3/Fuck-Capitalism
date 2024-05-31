@@ -137,7 +137,7 @@ position = Vector2(779, 631)
 
 [node name="cojermanasound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_jovw1")
-volume_db = -25.258
+volume_db = -12.686
 
 [connection signal="start_game" from="Hud" to="." method="new_game"]
 [connection signal="timeout" from="estadoTimer" to="." method="_on_estado_timer_timeout"]

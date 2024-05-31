@@ -1,20 +1,22 @@
-[gd_scene load_steps=8 format=3 uid="uid://2lvso0ngr4jw"]
+[gd_scene load_steps=23 format=3 uid="uid://2lvso0ngr4jw"]
 
 [ext_resource type="FontFile" uid="uid://clupipx8mvy4k" path="res://PressStart2P-Regular.ttf" id="1_mtv2n"]
 [ext_resource type="AudioStream" uid="uid://3qeviimkkado" path="res://startgame.MP3" id="1_n84xg"]
-[ext_resource type="PackedScene" uid="uid://cctvj088tocxp" path="res://introgame.tscn" id="1_xwn7f"]
 [ext_resource type="AudioStream" uid="uid://cb0or8nckiob4" path="res://boton start.MP3" id="2_l45hf"]
+[ext_resource type="Texture2D" uid="uid://b5skke28qjnxn" path="res://2.png" id="4_5jq7e"]
 
 [sub_resource type="GDScript" id="GDScript_aq2or"]
 script/source = "extends CanvasLayer
 
-signal start_game
 @export var motomo = preload(\"res://motomami.tscn\")
 @onready var progress_bar = $Control/ProgressBar
+@onready var color_rect = $ColorRect
+
+signal start_game
 
 func _ready():
-	$Control/StartButton/AudioStreamPlayer.play()
- # Conectar la señal del personaje al HUD
+	$Control/StartButton/AnimatedSprite2D.play()
+	$Control/AudioStreamPlayer.play()
 
 
 	
@@ -35,6 +37,7 @@ func show_message(text):
 	$Control/Mensaje.text = text
 	$Control/Mensaje.show()
 	$Control/Timer.start() 
+	$Control/StartButton/AnimatedSprite2D.play()
 	# Disable processing of further mouse clicks until the message is hidden
 	set_process_input(false)
 	# Start the message timer to hide the message after a delay
@@ -49,10 +52,12 @@ func show_game_over():
 	set_process_input(true)
 
 func _on_start_button_pressed():
+	$Control/StartButton/AnimatedSprite2D.play()
 	$Control/StartButton.hide()
-	
+	$Control/ColorRect.queue_free()
 	emit_signal(\"start_game\")
 	$Control/StartButton/AudioStreamPlayer.play()
+
 
 func _on_timer_timeout():
 	$Control/Mensaje.hide()
@@ -80,15 +85,114 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_scsqw"]
 bg_color = Color(1, 0, 0, 1)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_w8pt0"]
+atlas = ExtResource("4_5jq7e")
+region = Rect2(0, 0, 630, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gu5vg"]
+atlas = ExtResource("4_5jq7e")
+region = Rect2(630, 0, 630, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h3jgm"]
+atlas = ExtResource("4_5jq7e")
+region = Rect2(1260, 0, 630, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bivyc"]
+atlas = ExtResource("4_5jq7e")
+region = Rect2(1890, 0, 630, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s4twl"]
+atlas = ExtResource("4_5jq7e")
+region = Rect2(2520, 0, 630, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pkjkn"]
+atlas = ExtResource("4_5jq7e")
+region = Rect2(3150, 0, 630, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ckjd4"]
+atlas = ExtResource("4_5jq7e")
+region = Rect2(3780, 0, 630, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nrfak"]
+atlas = ExtResource("4_5jq7e")
+region = Rect2(4410, 0, 630, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlnf7"]
+atlas = ExtResource("4_5jq7e")
+region = Rect2(5040, 0, 630, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gvbdj"]
+atlas = ExtResource("4_5jq7e")
+region = Rect2(5670, 0, 630, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_htj3b"]
+atlas = ExtResource("4_5jq7e")
+region = Rect2(6300, 0, 630, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apvti"]
+atlas = ExtResource("4_5jq7e")
+region = Rect2(6930, 0, 630, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnlvr"]
+atlas = ExtResource("4_5jq7e")
+region = Rect2(7560, 0, 630, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0qhtj"]
+atlas = ExtResource("4_5jq7e")
+region = Rect2(8190, 0, 630, 500)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ms6dv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w8pt0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gu5vg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h3jgm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bivyc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s4twl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pkjkn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ckjd4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nrfak")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qlnf7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gvbdj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_htj3b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apvti")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hnlvr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0qhtj")
+}],
+"loop": false,
+"name": &"hdp Exp",
+"speed": 20.0
+}]
+
 [node name="Hud" type="CanvasLayer" groups=["barravida"]]
 script = SubResource("GDScript_aq2or")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 953.0
-offset_bottom = 723.0
-color = Color(0, 0, 0, 1)
-
-[node name="Node2D" parent="ColorRect" instance=ExtResource("1_xwn7f")]
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 anchors_preset = 1
@@ -111,6 +215,11 @@ anchors_preset = 0
 offset_right = 950.0
 offset_bottom = 723.0
 metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+offset_right = 953.0
+offset_bottom = 723.0
+color = Color(0, 0, 0, 1)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Control"]
 stream = ExtResource("1_n84xg")
@@ -138,6 +247,7 @@ autowrap_mode = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="StartButton" type="Button" parent="Control"]
+z_index = 2
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -158,6 +268,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Control/StartButton"]
 stream = ExtResource("2_l45hf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control/StartButton"]
+z_index = -1
+position = Vector2(112, 21)
+sprite_frames = SubResource("SpriteFrames_ms6dv")
+animation = &"hdp Exp"
 
 [node name="Timer" type="Timer" parent="Control"]
 wait_time = 2.0
