@@ -111,7 +111,6 @@ animations = [{
 [node name="Node2D" type="Node2D"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(478, 467)
 sprite_frames = SubResource("SpriteFrames_xhul5")
 animation = &"hdp Exp"
-frame = 13
-frame_progress = 1.0

@@ -26,49 +26,49 @@ var animations = []  # List of animation names
 
 
 func _ready():
-	var estado_types = $AnimatedSprite2D.sprite_frames.get_animation_names()
+    var estado_types = $AnimatedSprite2D.sprite_frames.get_animation_names()
 
-	# Generate a random number
-	var random_index = randi() % estado_types.size()
+    # Generate a random number
+    var random_index = randi() % estado_types.size()
 
-	# Ensure the random number is not 6
-	while random_index == 6:
-		random_index = randi() % estado_types.size()
+    # Ensure the random number is not 6
+    while random_index == 6:
+        random_index = randi() % estado_types.size()
 
-	# Play the animation using the generated index
-	$AnimatedSprite2D.play(estado_types[random_index])
-	$Area2D.connect(\"area_entered\",Callable(self, \"_on_area_2d_area_entered\"))
-	print(estado_types[random_index])
+    # Play the animation using the generated index
+    $AnimatedSprite2D.play(estado_types[random_index])
+    $Area2D.connect(\"area_entered\",Callable(self, \"_on_area_2d_area_entered\"))
+    print(estado_types[random_index])
 
 func _on_area_2d_area_entered(area):
   if area is Node2D:
-	# Check if the colliding Node2D's name is \"motomami\"
-	if area.name == \"motomami\":
-	  # Play the explosion animation and audio
-	  $AnimatedSprite2D.play(\"Explo\")
-	  $AudioStreamPlayer.play()
+    # Check if the colliding Node2D's name is \"motomami\"
+    if area.name == \"motomami\":
+      # Play the explosion animation and audio
+      $AnimatedSprite2D.play(\"Explo\")
+      $AudioStreamPlayer.play()
 
-	  # Wait for the animation to finish playing
-	  await $AnimatedSprite2D.animation_finished
-	  queue_free()
-	# Optional: Handle collisions with other Node2Ds (if needed)
+      # Wait for the animation to finish playing
+      await $AnimatedSprite2D.animation_finished
+      queue_free()
+    # Optional: Handle collisions with other Node2Ds (if needed)
 
 
-	
+    
 func _on_visible_on_screen_notifier_2d_screen_exited():
-	queue_free()
+    queue_free()
 
 
 
 func _on_body_entered(body):
-	pass # Replace with function body.
+    pass # Replace with function body.
 
 
 func _on_visible_on_screen_notifier_2d_child_entered_tree(node):
-	pass
+    pass
 
 func _on_animated_sprite_2d_child_entered_tree(node):
-	pass # Replace with function body.
+    pass # Replace with function body.
 
 "
 

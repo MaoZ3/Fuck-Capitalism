@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://2lvso0ngr4jw"]
+[gd_scene load_steps=8 format=3 uid="uid://2lvso0ngr4jw"]
 
 [ext_resource type="FontFile" uid="uid://clupipx8mvy4k" path="res://PressStart2P-Regular.ttf" id="1_mtv2n"]
 [ext_resource type="AudioStream" uid="uid://3qeviimkkado" path="res://startgame.MP3" id="1_n84xg"]
+[ext_resource type="PackedScene" uid="uid://cctvj088tocxp" path="res://introgame.tscn" id="1_xwn7f"]
 [ext_resource type="AudioStream" uid="uid://cb0or8nckiob4" path="res://boton start.MP3" id="2_l45hf"]
 
 [sub_resource type="GDScript" id="GDScript_aq2or"]
@@ -49,6 +50,7 @@ func show_game_over():
 
 func _on_start_button_pressed():
 	$Control/StartButton.hide()
+	
 	emit_signal(\"start_game\")
 	$Control/StartButton/AudioStreamPlayer.play()
 
@@ -80,6 +82,13 @@ bg_color = Color(1, 0, 0, 1)
 
 [node name="Hud" type="CanvasLayer" groups=["barravida"]]
 script = SubResource("GDScript_aq2or")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 953.0
+offset_bottom = 723.0
+color = Color(0, 0, 0, 1)
+
+[node name="Node2D" parent="ColorRect" instance=ExtResource("1_xwn7f")]
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 anchors_preset = 1
